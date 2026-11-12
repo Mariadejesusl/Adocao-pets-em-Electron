@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'" />
+  <title>Adoção Pet</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="renderer.js" defer></script>
+</head>
+
+<body>
+  <header class="navbar">
+    <div class="marca">
+      <span class="marca-icone">🐾</span>
+      <span>Adoção Pet</span>
+    </div>
+
+    <nav class="menu">
+      <button class="botao-menu ativo" id="btn-inicio">Home</button>
+      <button class="botao-menu" id="btn-animais">Animais</button>
+    </nav>
+  </header>
+
+  <main id="conteudo" class="conteudo"></main>
+
+  <dialog id="animal-dialog" class="janela janela-form">
+    <form id="form-animal">
+      <div class="janela-topo">
+        <div>
+          <p class="sobretitulo">ADOÇÃO PET</p>
+          <h2 id="form-title">Cadastrar Animal</h2>
+        </div>
+        <button type="button" class="botao-icone" data-fechar>×</button>
+      </div>
+
+      <div class="form-grid">
+        <label class="campo">
+          <span>Nome:</span>
+          <input name="nome" type="text" autocomplete="off" required />
+        </label>
+
+        <label class="campo">
+          <span>Espécie:</span>
+          <select name="especie" required>
+            <option value="" selected disabled>Selecione</option>
+            <option>Cachorro</option>
+            <option>Gato</option>
+          </select>
+        </label>
+
+        <label class="campo">
+          <span>Faixa etária:</span>
+          <select name="faixaEtaria" required>
+            <option value="" selected disabled>Selecione</option>
+            <option>Filhote (0-5 meses)</option>
+            <option>Jovem (6 meses-1 ano)</option>
+            <option>Adulto (1-7 anos)</option>
+          </select>
+        </label>
+
+        <label class="campo">
+          <span>Sexo:</span>
+          <select name="sexo" required>
+            <option value="" selected disabled>Selecione</option>
+            <option>Macho</option>
+            <option>Fêmea</option>
+          </select>
+        </label>
+
+        <label class="campo">
+          <span>Porte:</span>
+          <select name="porte" required>
+            <option value="" selected disabled>Selecione</option>
+            <option>Pequeno</option>
+            <option>Médio</option>
+            <option>Grande</option>
+          </select>
+        </label>
+
+        <label class="campo">
+          <span>Status:</span>
+          <select name="status">
+            <option>Disponível</option>
+            <option>Adotado</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="janela-acoes">
+        <button type="button" class="botao botao-secundario" data-fechar>Cancelar</button>
+        <button type="submit" class="botao botao-principal">Salvar</button>
+      </div>
+    </form>
+  </dialog>
+</body>
+
+</html>
