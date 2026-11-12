@@ -271,3 +271,82 @@ button {
   gap: 9px;
   margin-top: 23px;
 }
+
+
+* Detalhes do animal */
+
+
+.janela-detalhes {
+  width: 380px;
+  padding: 0;
+  overflow: hidden;
+  background-color: #f7f7fb;
+}
+
+.detalhes-topo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 105px;
+  padding: 0 24px;
+  background-color: #d2691e;
+  color: white;
+}
+
+.detalhes-topo h2 {
+  margin: 0;
+  font-size: 25px;
+}
+
+.detalhes-topo .sobretitulo {
+  color: #ffe3ca;
+}
+
+.botao-icone-claro {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: white;
+}
+
+.detalhes-corpo {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 20px 24px 24px 24px;
+}
+
+.detalhes-card {
+  width: 100%;
+  margin: 0;
+  padding: 18px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  border: 1px solid #e2dfdc;
+  border-radius: 7px;
+  background-color: white;
+}
+
+.detalhes-linha {
+  display: flex;
+  gap: 10px;
+}
+
+.detalhes-linha dt {
+  width: 95px;
+  color: #666666;
+  font-size: 10px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.detalhes-linha dd {
+  margin: 0;
+  font-size: 14px;
+}
+
+.detalhes-fechar {
+  align-self: flex-end;
+  background-color: #d2691e;
+}
