@@ -1,5 +1,10 @@
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow,ipcMain  } = require('electron');
 const path = require('node:path');
+
+
+ipcMain.handle('carregar', async () => {
+  return [];
+});
 
 function criarJanela() {
   const janela = new BrowserWindow({
@@ -7,6 +12,7 @@ function criarJanela() {
     height: 700,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
+      contextIsolation: true
     },
   });
 
