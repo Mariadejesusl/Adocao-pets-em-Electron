@@ -1,9 +1,20 @@
-const { app, BrowserWindow,ipcMain  } = require('electron');
+const { app, BrowserWindow,ipcMain,dialog  } = require('electron');
 const path = require('node:path');
 
 
 ipcMain.handle('carregar', async () => {
   return [];
+});
+//excluir com confi
+ipcMain.handle('animais:confirmar-exclusao', async (evento, nome) => {
+  const resposta = await dialog.showMessageBox({
+    type: 'question',
+    buttons: ['Cancelar', 'Excluir'],
+    defaultId: 0,
+    cancelId: 0,
+    message: `Excluir ${nome}?`
+  });
+  return resposta.response === 1;
 });
 
 function criarJanela() {
