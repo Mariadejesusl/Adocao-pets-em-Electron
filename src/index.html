@@ -19,6 +19,7 @@
     <nav class="menu">
       <button class="botao-menu ativo" id="btn-inicio">Home</button>
       <button class="botao-menu" id="btn-animais">Animais</button>
+      <button class="botao-menu" id="btn-cadastrar">Cadastrar</button>
     </nav>
   </header>
 
@@ -91,7 +92,52 @@
         <button type="button" class="botao botao-secundario" data-fechar>Cancelar</button>
         <button type="submit" class="botao botao-principal">Salvar</button>
       </div>
+
     </form>
+  </dialog>
+
+  <dialog id="dialog-detalhes" class="janela janela-detalhes">
+
+    <div class="detalhes-topo">
+      <div class="detalhes-titulo">
+        <p class="sobretitulo">CONHEÇA ESSE PET</p>
+        <h2 id="detalhes-nome"></h2>
+      </div>
+
+      <button type="button" class="botao-icone botao-icone-claro" data-fechar>×</button>
+    </div>
+
+    <div class="detalhes-corpo">
+
+      <dl class="detalhes-card">
+
+        <div class="detalhes-linha">
+          <dt>Espécie</dt>
+          <dd id="detalhes-especie"></dd>
+        </div>
+
+        <div class="detalhes-linha">
+          <dt>Faixa etária</dt>
+          <dd id="detalhes-faixa-etaria"></dd>
+        </div>
+
+        <div class="detalhes-linha">
+          <dt>Sexo</dt>
+          <dd id="detalhes-sexo"></dd>
+        </div>
+
+        <div class="detalhes-linha">
+          <dt>Porte</dt>
+          <dd id="detalhes-porte"></dd>
+        </div>
+
+      </dl>
+
+      <span id="detalhes-status" class="selo"></span>
+
+      <button type="button" class="botao botao-principal detalhes-fechar" data-fechar>Fechar</button>
+
+    </div>
   </dialog>
 </body>
 

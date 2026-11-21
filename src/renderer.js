@@ -3,8 +3,10 @@ let animais = [];
 const conteudo = document.getElementById('conteudo');
 const btnInicio = document.getElementById('btn-inicio');
 const btnAnimais = document.getElementById('btn-animais');
+const btnCadastrar = document.getElementById('btn-cadastrar');
 const animalDialog = document.getElementById('animal-dialog');
 const formAnimal = document.getElementById('form-animal');
+const dialogDetalhes = document.getElementById('dialog-detalhes');
 
 function mostrarHome() {
   btnInicio.classList.add('ativo');
@@ -22,6 +24,8 @@ function mostrarHome() {
 function criarCard(animal) {
   const card = document.createElement('article');
   card.className = 'card-animal';
+  card.dataset.acao = 'detalhes';
+  card.dataset.id = animal.id;
 
   const info = document.createElement('div');
   info.className = 'animal-info';
@@ -96,6 +100,20 @@ function abrirFormulario() {
   animalDialog.showModal();
 }
 
+function mostrarDetalhes(animal) {
+  document.querySelector('#detalhes-nome').textContent = animal.nome;
+  document.querySelector('#detalhes-especie').textContent = animal.especie;
+  document.querySelector('#detalhes-faixa-etaria').textContent = animal.faixaEtaria;
+  document.querySelector('#detalhes-sexo').textContent = animal.sexo;
+  document.querySelector('#detalhes-porte').textContent = animal.porte;
+
+  const status = document.querySelector('#detalhes-status');
+  status.textContent = animal.status;
+  status.className = 'selo ' + (animal.status === 'Disponível' ? 'status-disponivel' : 'status-adotado');
+
+  dialogDetalhes.showModal();
+}
+
 function onSalvar(evento) {
   evento.preventDefault();
   const campos = formAnimal.elements;
@@ -121,10 +139,42 @@ function onSalvar(evento) {
 formAnimal.addEventListener('submit', onSalvar);
 
 for (const botao of document.querySelectorAll('[data-fechar]')) {
-  botao.addEventListener('click', () => animalDialog.close());
+  botao.addEventListener('click', () => {
+    const dialogo = botao.closest('dialog');
+    if (dialogo) dialogo.close();
+  });
 }
 
 btnInicio.addEventListener('click', mostrarHome);
 btnAnimais.addEventListener('click', mostrarAnimais);
+btnCadastrar.addEventListener('click', abrirFormulario);
+
+conteudo.addEventListener('click', function (evento) {
+  if (evento.target.closest('.animal-acoes')) return;
+
+  const botao = evento.target.closest('[data-acao]');
+  if (botao === null) return;
+
+  const acao = botao.dataset.acao;
+  const id = botao.dataset.id;
+
+  if (acao === 'ver-animais') {mostrarAnimais(); return;}
+
+  if (acao === 'detalhes') {
+    const animal = animais.find(function (a) { return a.id === id; });
+    if (animal) mostrarDetalhes(animal);
+    return;
+  }
+
+});
+
+
+if (window.api.onMenuNovoCadastro) {
+  window.api.onMenuNovoCadastro(function () {
+    abrirFormulario(null);
+  });
+}
+
+
 
 mostrarAnimais();
