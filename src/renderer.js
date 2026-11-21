@@ -56,7 +56,9 @@ function criarCard(animal) {
   const excluir = document.createElement('button');
   excluir.className = 'botao botao-excluir';
   excluir.textContent = 'Excluir';
+  excluir.addEventListener('click', function () { excluirAnimal(animal);});
   acoes.append(editar, excluir);
+
   card.append(info, acoes);
   return card;
 }
@@ -93,6 +95,14 @@ function mostrarAnimais() {
   for (const animal of animais) {
     lista.appendChild(criarCard(animal));
   }
+}
+
+async function excluirAnimal(animal) {
+  const confirmou = await window.api.confirmarExclusao(animal.nome);
+  if (!confirmou) return;
+
+  animais = animais.filter(function (a) { return a.id !== animal.id; });
+  mostrarAnimais();
 }
 
 function abrirFormulario() {
@@ -138,6 +148,7 @@ function onSalvar(evento) {
 }
 formAnimal.addEventListener('submit', onSalvar);
 
+
 for (const botao of document.querySelectorAll('[data-fechar]')) {
   botao.addEventListener('click', () => {
     const dialogo = botao.closest('dialog');
@@ -177,4 +188,9 @@ if (window.api.onMenuNovoCadastro) {
 
 
 
-mostrarAnimais();
+async function iniciar() {
+  animais = await window.api.carregar();
+  mostrarAnimais();
+}
+
+iniciar();
