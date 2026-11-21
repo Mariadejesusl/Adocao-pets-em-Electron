@@ -190,7 +190,7 @@ if (window.api.onMenuNovoCadastro) {
 
 async function iniciar() {
   animais = await window.api.carregar();
-  mostrarAnimais();
+  mostrarHome();
 }
 
 iniciar();
