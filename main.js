@@ -1,5 +1,6 @@
 const { app, BrowserWindow, ipcMain, dialog, Menu } = require('electron');
 const path = require('node:path');
+const repositorio = require('./repositorio.js');
 
 let janela = null;
 
@@ -21,8 +22,14 @@ function criarJanela() {
 }
 
 function registrarHandlers() {
+
   ipcMain.handle('carregar', async function () {
-    return [];
+    return repositorio.carregar();
+  });
+
+  ipcMain.handle('animais:salvar', async function (evento, animais) {
+    await repositorio.salvar(animais);
+    return { ok: true };
   });
 
   ipcMain.handle('animais:confirmar-exclusao', async function (evento, nome) {
@@ -33,6 +40,7 @@ function registrarHandlers() {
       cancelId: 0,
       message: `Excluir ${nome}?`
     });
+
     return resposta.response === 1;
   });
 }
@@ -63,6 +71,7 @@ function criarMenu() {
 
 app.whenReady().then(function () {
   app.setName('Adoção Pet');
+  console.log(app.getPath('userData'));
   registrarHandlers();
   criarMenu();
   criarJanela();

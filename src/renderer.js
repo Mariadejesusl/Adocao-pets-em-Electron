@@ -1,3 +1,4 @@
+
 let animais = [];
 
 const conteudo = document.getElementById('conteudo');
@@ -7,6 +8,10 @@ const btnCadastrar = document.getElementById('btn-cadastrar');
 const animalDialog = document.getElementById('animal-dialog');
 const formAnimal = document.getElementById('form-animal');
 const dialogDetalhes = document.getElementById('dialog-detalhes');
+
+async function salvarAnimais() {
+  await window.api.salvar(animais);
+}
 
 function mostrarHome() {
   btnInicio.classList.add('ativo');
@@ -20,7 +25,6 @@ function mostrarHome() {
   `;
 }
 
-
 function criarCard(animal) {
   const card = document.createElement('article');
   card.className = 'card-animal';
@@ -29,6 +33,7 @@ function criarCard(animal) {
 
   const info = document.createElement('div');
   info.className = 'animal-info';
+
   const nome = document.createElement('h2');
   nome.className = 'animal-nome';
   nome.textContent = animal.nome;
@@ -39,16 +44,19 @@ function criarCard(animal) {
 
   const status = document.createElement('span');
   status.className = 'selo';
+
   if (animal.status === 'Disponível') {
     status.classList.add('status-disponivel');
   } else {
     status.classList.add('status-adotado');
   }
+
   status.textContent = animal.status;
   info.append(nome, dados, status);
 
   const acoes = document.createElement('div');
   acoes.className = 'animal-acoes';
+
   const editar = document.createElement('button');
   editar.className = 'botao botao-editar';
   editar.textContent = 'Editar';
@@ -56,13 +64,15 @@ function criarCard(animal) {
   const excluir = document.createElement('button');
   excluir.className = 'botao botao-excluir';
   excluir.textContent = 'Excluir';
-  excluir.addEventListener('click', function () { excluirAnimal(animal);});
-  acoes.append(editar, excluir);
+  excluir.addEventListener('click', function () {
+    excluirAnimal(animal);
+  });
 
+  acoes.append(editar, excluir);
   card.append(info, acoes);
+
   return card;
 }
-
 
 function mostrarAnimais() {
   btnAnimais.classList.add('ativo');
@@ -84,6 +94,7 @@ function mostrarAnimais() {
   document.getElementById('btn-novo').addEventListener('click', abrirFormulario);
 
   const lista = document.getElementById('lista-animais');
+
   if (animais.length === 0) {
     lista.innerHTML = `
       <div class="lista-vazia">
@@ -99,9 +110,14 @@ function mostrarAnimais() {
 
 async function excluirAnimal(animal) {
   const confirmou = await window.api.confirmarExclusao(animal.nome);
+
   if (!confirmou) return;
 
-  animais = animais.filter(function (a) { return a.id !== animal.id; });
+  animais = animais.filter(function (a) {
+    return a.id !== animal.id;
+  });
+
+  await salvarAnimais();
   mostrarAnimais();
 }
 
@@ -124,10 +140,12 @@ function mostrarDetalhes(animal) {
   dialogDetalhes.showModal();
 }
 
-function onSalvar(evento) {
+async function onSalvar(evento) {
   evento.preventDefault();
+
   const campos = formAnimal.elements;
   const nome = campos.nome.value.trim();
+
   if (nome === '') {
     campos.nome.focus();
     return;
@@ -143,11 +161,13 @@ function onSalvar(evento) {
     status: campos.status.value
   });
 
+  await salvarAnimais();
+
   animalDialog.close();
   mostrarAnimais();
 }
-formAnimal.addEventListener('submit', onSalvar);
 
+formAnimal.addEventListener('submit', onSalvar);
 
 for (const botao of document.querySelectorAll('[data-fechar]')) {
   botao.addEventListener('click', () => {
@@ -169,16 +189,20 @@ conteudo.addEventListener('click', function (evento) {
   const acao = botao.dataset.acao;
   const id = botao.dataset.id;
 
-  if (acao === 'ver-animais') {mostrarAnimais(); return;}
-
-  if (acao === 'detalhes') {
-    const animal = animais.find(function (a) { return a.id === id; });
-    if (animal) mostrarDetalhes(animal);
+  if (acao === 'ver-animais') {
+    mostrarAnimais();
     return;
   }
 
-});
+  if (acao === 'detalhes') {
+    const animal = animais.find(function (a) {
+      return a.id === id;
+    });
 
+    if (animal) mostrarDetalhes(animal);
+    return;
+  }
+});
 
 if (window.api.onMenuNovoCadastro) {
   window.api.onMenuNovoCadastro(function () {
@@ -186,11 +210,15 @@ if (window.api.onMenuNovoCadastro) {
   });
 }
 
-
-
 async function iniciar() {
-  animais = await window.api.carregar();
-  mostrarHome();
+  try {
+    animais = await window.api.carregar();
+    mostrarHome();
+  } catch (erro) {
+    console.error('Erro ao carregar animais:', erro);
+    alert('Não foi possível carregar os animais salvos.');
+  }
 }
 
 iniciar();
+
