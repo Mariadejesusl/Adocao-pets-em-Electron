@@ -1,5 +1,6 @@
 
 let animais = [];
+let animalEmEdicao = null;
 
 const conteudo = document.getElementById('conteudo');
 const btnInicio = document.getElementById('btn-inicio');
@@ -60,6 +61,9 @@ function criarCard(animal) {
   const editar = document.createElement('button');
   editar.className = 'botao botao-editar';
   editar.textContent = 'Editar';
+  editar.addEventListener('click', function () {
+    editarAnimal(animal);
+  });
 
   const excluir = document.createElement('button');
   excluir.className = 'botao botao-excluir';
@@ -121,8 +125,27 @@ async function excluirAnimal(animal) {
   mostrarAnimais();
 }
 
+function editarAnimal(animal) {
+  animalEmEdicao = animal;
+
+  const campos = formAnimal.elements;
+
+  campos.nome.value = animal.nome;
+  campos.especie.value = animal.especie;
+  campos.faixaEtaria.value = animal.faixaEtaria;
+  campos.sexo.value = animal.sexo;
+  campos.porte.value = animal.porte;
+  campos.status.value = animal.status;
+
+  document.getElementById('form-title').textContent = 'Editar Animal';
+  animalDialog.showModal();
+}
+
 function abrirFormulario() {
+  animalEmEdicao = null;
   formAnimal.reset();
+
+  document.getElementById('form-title').textContent = 'Cadastrar Animal';
   animalDialog.showModal();
 }
 
@@ -151,17 +174,28 @@ async function onSalvar(evento) {
     return;
   }
 
-  animais.push({
-    id: crypto.randomUUID(),
-    nome,
-    especie: campos.especie.value,
-    faixaEtaria: campos.faixaEtaria.value,
-    sexo: campos.sexo.value,
-    porte: campos.porte.value,
-    status: campos.status.value
-  });
+  if (animalEmEdicao !== null) {
+    animalEmEdicao.nome = nome;
+    animalEmEdicao.especie = campos.especie.value;
+    animalEmEdicao.faixaEtaria = campos.faixaEtaria.value;
+    animalEmEdicao.sexo = campos.sexo.value;
+    animalEmEdicao.porte = campos.porte.value;
+    animalEmEdicao.status = campos.status.value;
+  } else {
+    animais.push({
+      id: crypto.randomUUID(),
+      nome,
+      especie: campos.especie.value,
+      faixaEtaria: campos.faixaEtaria.value,
+      sexo: campos.sexo.value,
+      porte: campos.porte.value,
+      status: campos.status.value
+    });
+  }
 
   await salvarAnimais();
+
+  animalEmEdicao = null;
 
   animalDialog.close();
   mostrarAnimais();
