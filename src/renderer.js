@@ -247,7 +247,7 @@ if (window.api.onMenuNovoCadastro) {
 async function iniciar() {
   try {
     animais = await window.api.carregar();
-    mostrarHome();
+    mostrarAnimais();
   } catch (erro) {
     console.error('Erro ao carregar animais:', erro);
     alert('Não foi possível carregar os animais salvos.');

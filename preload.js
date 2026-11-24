@@ -2,7 +2,7 @@ const { contextBridge, ipcRenderer } = require('electron');
 
 contextBridge.exposeInMainWorld('api', {
 
-  carregar: () => ipcRenderer.invoke('carregar'),
+  carregar: () => ipcRenderer.invoke('animais:carregar'),
 
   salvar: (animais) => ipcRenderer.invoke('animais:salvar', animais),
 

@@ -23,7 +23,7 @@ function criarJanela() {
 
 function registrarHandlers() {
 
-  ipcMain.handle('carregar', async function () {
+  ipcMain.handle('animais:carregar', async function () {
     return repositorio.carregar();
   });
 
