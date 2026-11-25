@@ -4,6 +4,14 @@ Sistema desktop desenvolvido com **Electron**, JavaScript, HTML e CSS para o ger
 
 A aplicação permite cadastrar, visualizar, editar e excluir animais, além de acompanhar a situação de cada um (disponível ou adotado). Os dados são armazenados localmente em um arquivo JSON.
 
+## 👩‍💻 Integrantes
+
+- Evandro Lucas Cunha Lima
+- Júlia Emily Araújo Carvalho
+- Keliane Bandeira Barbosa
+- Maria de Jesus Lima Silva
+- Thaísa Venâncio de Sousa
+
 ## ✨ Funcionalidades
 
 - **Página inicial:** apresenta a tela de boas-vindas do sistema.
@@ -17,7 +25,7 @@ A aplicação permite cadastrar, visualizar, editar e excluir animais, além de 
 - **Listagem:** exibe os animais cadastrados e suas principais informações.
 - **Detalhes:** permite consultar as informações completas de um animal.
 - **Edição:** permite alterar os dados de um animal já cadastrado.
-- **Exclusão:** permite excluir um cadastro após uma confirmação.
+- **Exclusão:** permite excluir um cadastro após confirmação em diálogo nativo.
 - **Persistência local:** mantém os dados salvos entre as execuções do aplicativo.
 
 ## 🛠️ Tecnologias utilizadas
